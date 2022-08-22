@@ -26,17 +26,17 @@ public class CreateList {
  */
     //Filter list.
     public void showList(List<Persona> persona){
-        persona.stream().forEach(System.out::println);
+        persona.stream().forEach(System.out::println);//It's a test sentence, i am looking if the list is complete.
         System.out.println("Filtrar por edad menor de 25");
         System.out.println("*=========================================*");
-        persona.stream().filter((p)-> p.getAge() <25).forEach(System.out::println);
+        persona.stream().filter((p)-> p.getAge() <25).filter((p)-> p.getAge() >0).forEach(System.out::println);
         System.out.println("Filtrado por nombre diferente a A");
         System.out.println("*=========================================*");
         persona.stream().filter((p)->!p.getName().startsWith("A")).forEach(System.out::println);
         System.out.println("Filtrar por menor de 25 y Ciudad Madrid");
         System.out.println("*=========================================*");
-        persona.stream().filter((p)-> p.getAge() <25).filter((p)->p.getCity().equals("Madrid")).forEach(System.out::println);
-        Optional<Persona> personOptionalMadrid = listPeople.stream().findFirst();
+        //persona.stream().filter((p)-> p.getAge() <25).filter((p)-> p.getAge() >0).filter((p)->p.getCity().equals("Madrid")).forEach(System.out::println);
+        Optional<Persona> personOptionalMadrid = listPeople.stream().filter((p)-> p.getAge() <25).filter((p)-> p.getAge() >0).filter((p)->p.getCity().equals("Madrid")).findFirst();
         if (personOptionalMadrid.isPresent()) {
             System.out.println(personOptionalMadrid.get());
         } else {
@@ -44,7 +44,13 @@ public class CreateList {
         }
         System.out.println("Filtrar por menor de 25 y ciudad Barcelona");
         System.out.println("*=========================================*");
-        persona.stream().filter((p)-> p.getAge() <25).filter((p)->p.getCity().equals("Barcelona")).forEach(System.out::println);
+       //persona.stream().filter((p)-> p.getAge() <25).filter((p)->p.getCity().equals("Barcelona")).forEach(System.out::println);
+        Optional<Persona> personOptionalBarcelona = listPeople.stream().filter((p)-> p.getAge() <25).filter((p)-> p.getAge() >0).filter((p)->p.getCity().equals("Barcelona")).findFirst();
+        if (personOptionalBarcelona.isPresent()) {
+            System.out.println(personOptionalBarcelona.get());
+        } else {
+            System.out.println("No value.");
+        }
     }
     //This method can read people.txt, create objects and add the fields into a List<Persona>.
     public List<Persona> readListToCSV (String arg) throws emptyFieldException, errorAgeException {
