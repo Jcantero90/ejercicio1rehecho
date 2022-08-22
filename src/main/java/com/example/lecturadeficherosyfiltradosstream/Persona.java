@@ -37,10 +37,18 @@ public class Persona {
 
     @Override
     public String toString() {
-        return "Persona{" +
-                "name='" + name + '\'' +
-                ", city='" + city + '\'' +
-                ", age=" + age +
-                '}';
+        if(name == ""){
+            name = "NoName";
+        }
+        /*// This function doesnt works.
+        if(age == Integer.parseInt("")){
+            age = 0;
+        }
+         */
+
+        return
+                "Name: " + name +
+                ". City: " + city +
+                ". Age: " + age;
     }
 }

@@ -7,9 +7,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class CreateList {
- private List<Persona> listPeople = new ArrayList<>(); //Creo la lista como variable global.
+ private List<Persona> listPeople = new ArrayList<>(); //I made a global List.
 
 //We can create objects by this method.
     public Persona createObjectPeople(String name, String city, int age){
@@ -35,13 +36,19 @@ public class CreateList {
         System.out.println("Filtrar por menor de 25 y Ciudad Madrid");
         System.out.println("*=========================================*");
         persona.stream().filter((p)-> p.getAge() <25).filter((p)->p.getCity().equals("Madrid")).forEach(System.out::println);
+        Optional<Persona> personOptionalMadrid = listPeople.stream().findFirst();
+        if (personOptionalMadrid.isPresent()) {
+            System.out.println(personOptionalMadrid.get());
+        } else {
+            System.out.println("No value.");
+        }
         System.out.println("Filtrar por menor de 25 y ciudad Barcelona");
         System.out.println("*=========================================*");
         persona.stream().filter((p)-> p.getAge() <25).filter((p)->p.getCity().equals("Barcelona")).forEach(System.out::println);
     }
     //This method can read people.txt, create objects and add the fields into a List<Persona>.
-    public List<Persona> readListToCSV () throws emptyFieldException, errorAgeException {
-        Path path = Paths.get("C:/Users/jonatan.cantero/Documents/Apuntes/SpringBoot/LecturaDeFicherosYFiltradosStream/src/main/java/com/example/lecturadeficherosyfiltradosstream/people.txt");
+    public List<Persona> readListToCSV (String arg) throws emptyFieldException, errorAgeException {
+        Path path = Paths.get(arg);
         BufferedReader reader = null;
         String name = null;
         String city = null;
@@ -65,13 +72,20 @@ public class CreateList {
                 throw new emptyFieldException("Empty field");
             }
             try {
-                city = person[1];
+                if (person.length>1){
+                    city = person[1];
+                }else {
+                    city = "Unknown";
+                }
             } catch (Exception e) {
                 throw new emptyFieldException("Empty field");
             }
             try {
-
-                age = Integer.parseInt(person[2]);
+                if(person.length>2){
+                    age = Integer.parseInt(person[2]);
+                }else{
+                    age=0;
+                }
             } catch (Exception e) {
                 throw new errorAgeException("Wrong Age");
             }
